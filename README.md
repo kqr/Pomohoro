@@ -23,12 +23,7 @@ If you then want to take a timed five-minute break, you can start that with
     ph rem 5
 
 As you can guess, the number `5` represents how many minutes until you want
-to be reminded that it's time to get back to work. As it happens, you can use
-this as a general reminding tool, for example like this:
-
-    ph rem 20 Drink some more water!
-
-where it will include your message in the reminder.
+to be reminded that it's time to get back to work.
 
 If your pomodoro session gets interrupted, you signal this by issuing the
 command
@@ -36,7 +31,8 @@ command
     ph int
 
 which will terminate your current session and record the correct starting and
-stopping times in the timeclock file.
+stopping times in the timeclock file. Note: this will only terminate an active
+session, it will not cancel any reminders you have set!
 
 
 ## Configuration
@@ -74,6 +70,15 @@ saying what you're doing for Acme.
 
     ph start acme annoying newline bug in web shop
 
+You can also check how far into your current session you are, by issuing the
+command
+
+    ph status
+    
+which will respond with something along the lines of
+
+    Current work session: 19/25 minute(s)
+
 If you want a shorter session than usual, but you suck at keeping track of time
 yourself, you can always start a regular session along with a reminder, and
 then manually interrupt the regular session once the timer goes off. Like so:
@@ -82,7 +87,14 @@ then manually interrupt the regular session once the timer goes off. Like so:
     ph rem 15   # I only really want a 15 minute session
     # ...
     # reminder goes off!
-    ph int 
+    ph int
+    
+As it happens, you can use the reminder functionality as a general reminding
+tool, for example like this:
+
+    ph rem 20 Drink some more water!
+
+where it will include your message in the reminder.
 
 
 ## Developer notes
@@ -112,5 +124,12 @@ and then follow the instructions on the screen.
 
     This should be pretty easy to make since UDP allows several processes to
     listen to a single port.
+    
+    It does however require an upgrade to the protocol. You're likely to also
+    want to get the status of either all sessions or a specific one.
 
 * Tests
+
+* Timeout on status call. Currently, after the client issues a status request,
+    it waits for an UDP reply. If no session is active, no such reply will be
+    sent and thus it will wait for ever. A simple timeout would solve that.
