@@ -7,6 +7,36 @@ the lines of
 
     alias ph=pomohoro
 
+which is the alias I will use throughout this document.
+
+
+## Installation
+
+To install, the following four commands are likely sufficient:
+
+1. Install the Haskell build tool Stack. This is not strictly necessary, but
+    it will make installation much easier than having to chase dependencies
+    and compile manually.
+
+        $ sudo apt-get install stack
+
+2. Download the code.
+
+        $ git clone git@github.com:kqr/Pomohoro.git && cd Pomohoro
+
+3. Build and install the program.
+
+        $ stack install
+
+4. Put the executable in your path (adjust command to suit your path preferences.)
+
+        $ sudo cp ~/.local/bin/pomohoro-exe /usr/local/bin/pomohoro
+
+The third command may exit with an error and prompt you to run `stack setup`. If
+it does, follow those instructions. It is simply saying that it can't find the
+correct version of the compiler on your system, so it will download one an
+instal it in a sandbox so it does not affect the rest of your system.
+
 
 ## Basic usage
 
