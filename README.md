@@ -49,7 +49,23 @@ timer will go off and it will display a FreeDesktop.org notification alerting
 you of this. 25 minutes of work will be recorded to the timelog file, which by
 default is called `.pomohoro.timeclock` and is located in your home directory.
 
-If you then want to take a timed five-minute break, you can start that with
+You can use hledger to get a summary of this time information rendered in
+several neat formats. One of my favourites is the daily balance, which you get
+by running `hledger -f timeclock_file balance --daily`:
+
+    Balance changes in 2016/10/02-2016/10/08:
+
+             ||  2016/10/02  2016/10/03  2016/10/04  2016/10/05  2016/10/06  2016/10/07  2016/10/08
+    =========++=====================================================================================
+     dd2380  ||       3.90h           0       2.26h       2.51h       1.27h       3.17h           0
+     ik2218  ||           0           0       1.25h       0.18h       2.00h           0       2.00h
+     org     ||       0.25h       5.58h       1.70h       0.32h           0       0.42h           0
+     support ||           0           0           0       0.19h           0           0           0
+    ---------++-------------------------------------------------------------------------------------
+             ||       4.15h       5.58h       5.21h       3.20h       3.27h       3.58h       2.00h
+
+If you after your hard working session want to take a timed five-minute break,
+you can start that with
 
     ph rem 5
 
