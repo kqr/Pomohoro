@@ -77,19 +77,25 @@ main = do
 
 
 startWork :: Settings -> Text -> Text -> IO ()
-startWork settings account comment =
-    daemonize $ do
-        startTime <- getZonedTime
-        appendFile (_timeclockPath settings) (clockin
-            startTime
-            (if Text.null account then _defaultAccount settings else account)
-            comment)
-        void (timeout (usecFromMinutes (_sessionLength settings))
-            (handleSession settings startTime))
-        stopTime <- getZonedTime
-        appendFile (_timeclockPath settings) (clockout stopTime)
-        notifySend "Work is over!"
-            ("You have worked for " <> show (minuteDiff stopTime startTime) <> " minutes. Well done!")
+startWork settings account comment = do
+    sendUDP settings "status"
+    response <- timeout 1000000 (recvUDP settings)
+    case response of
+        Just _ ->
+            putStrLn ("Another session already active. Exiting." :: Text)
+        Nothing ->
+            daemonize $ do
+                startTime <- getZonedTime
+                appendFile (_timeclockPath settings) (clockin
+                    startTime
+                    (if Text.null account then _defaultAccount settings else account)
+                    comment)
+                void (timeout (usecFromMinutes (_sessionLength settings))
+                    (handleSession settings startTime))
+                stopTime <- getZonedTime
+                appendFile (_timeclockPath settings) (clockout stopTime)
+                notifySend "Work is over!"
+                    ("You have worked for " <> show (minuteDiff stopTime startTime) <> " minutes. Well done!")
 
 
 handleSession :: Settings -> ZonedTime -> IO ()

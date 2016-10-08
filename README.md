@@ -143,9 +143,6 @@ and then follow the instructions on the screen.
 
 Roughly in order of priority:
 
-* Warn when starting a new session when one is already started. Perhaps by
-    sending a UDP message and waiting for a response when starting?
-
 * Convenience wrapping command around hledger (or the hledger API?) to get
     the time balance for the last week or something?
 
