@@ -16,7 +16,8 @@ With the above alias, all you need to start the timer is
 
 This should output nothing, but 25 minutes after you issued the command, the
 timer will go off and it will display a FreeDesktop.org notification alerting
-you of this.
+you of this. 25 minutes of work will be recorded to the timelog file, which by
+default is called `.pomohoro.timeclock` and is located in your home directory.
 
 If you then want to take a timed five-minute break, you can start that with
 

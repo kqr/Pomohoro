@@ -16,10 +16,10 @@ data Settings = Settings
 
 loadSettings :: IO Settings
 loadSettings = do
-    cfgPath <- fmap (<> "/.pomohoro.cfg") getHomeDirectory
-    config <- load [Optional cfgPath]
+    home <- getHomeDirectory
+    config <- load [Optional (home <> "/.pomohoro.cfg")]
     Settings
         <$> lookupDefault 25 config "session-length"
         <*> lookupDefault "work" config "default-account"
-        <*> lookupDefault "/tmp/pomohoro.timeclock" config "timeclock-file"
+        <*> lookupDefault (home <> "/.pomohoro.timeclock") config "timeclock-file"
         <*> fmap fromInteger (lookupDefault 8712 config "port")
