@@ -1,8 +1,6 @@
 module Networking where
 import Protolude
 
-import Data.Text as Text
-import Data.Text.Encoding
 import qualified Network.Socket as Socket hiding (send, recv)
 import qualified Network.Socket.ByteString as Socket
 
