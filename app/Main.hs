@@ -107,8 +107,12 @@ handleSession settings startTime = do
 queryStatus :: Settings -> IO ()
 queryStatus settings = do
     sendUDP settings "status"
-    response <- recvUDP settings
-    putStrLn ("Current work session: " <> response <> "/" <> show (_sessionLength settings) <> " minute(s)")
+    response <- timeout 1000000 (recvUDP settings)
+    case response of
+        Just mins -> 
+            putStrLn ("Current work session: " <> mins <> "/" <> show (_sessionLength settings) <> " minute(s)")
+        Nothing ->
+            putStrLn ("No work session active." :: Text)
     
 
 interrupt :: Settings -> IO ()
