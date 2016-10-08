@@ -143,11 +143,6 @@ and then follow the instructions on the screen.
 
 Roughly in order of priority:
 
-* Timeout on status call. Currently, after the client issues a status request,
-
-    it waits for an UDP reply. If no session is active, no such reply will be
-    sent and thus it will wait for ever. A simple timeout would solve that.
-
 * Warn when starting a new session when one is already started. Perhaps by
     sending a UDP message and waiting for a response when starting?
 
