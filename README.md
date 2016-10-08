@@ -7,6 +7,36 @@ the lines of
 
     alias ph=pomohoro
 
+which is the alias I will use throughout this document.
+
+
+## Installation
+
+To install, the following four commands are likely sufficient:
+
+1. Install the Haskell build tool Stack. This is not strictly necessary, but
+    it will make installation much easier than having to chase dependencies
+    and compile manually.
+
+        $ sudo apt-get install stack
+
+2. Download the code.
+
+        $ git clone git@github.com:kqr/Pomohoro.git && cd Pomohoro
+
+3. Build and install the program.
+
+        $ stack install
+
+4. Put the executable in your path (adjust command to suit your path preferences.)
+
+        $ sudo cp ~/.local/bin/pomohoro-exe /usr/local/bin/pomohoro
+
+The third command may exit with an error and prompt you to run `stack setup`. If
+it does, follow those instructions. It is simply saying that it can't find the
+correct version of the compiler on your system, so it will download one an
+instal it in a sandbox so it does not affect the rest of your system.
+
 
 ## Basic usage
 
@@ -24,12 +54,7 @@ If you then want to take a timed five-minute break, you can start that with
     ph rem 5
 
 As you can guess, the number `5` represents how many minutes until you want
-to be reminded that it's time to get back to work. As it happens, you can use
-this as a general reminding tool, for example like this:
-
-    ph rem 20 Drink some more water!
-
-where it will include your message in the reminder.
+to be reminded that it's time to get back to work.
 
 If your pomodoro session gets interrupted, you signal this by issuing the
 command
@@ -37,7 +62,8 @@ command
     ph int
 
 which will terminate your current session and record the correct starting and
-stopping times in the timeclock file.
+stopping times in the timeclock file. Note: this will only terminate an active
+session, it will not cancel any reminders you have set!
 
 
 ## Configuration
@@ -75,6 +101,15 @@ saying what you're doing for Acme.
 
     ph start acme annoying newline bug in web shop
 
+You can also check how far into your current session you are, by issuing the
+command
+
+    ph status
+    
+which will respond with something along the lines of
+
+    Current work session: 19/25 minute(s)
+
 If you want a shorter session than usual, but you suck at keeping track of time
 yourself, you can always start a regular session along with a reminder, and
 then manually interrupt the regular session once the timer goes off. Like so:
@@ -83,7 +118,14 @@ then manually interrupt the regular session once the timer goes off. Like so:
     ph rem 15   # I only really want a 15 minute session
     # ...
     # reminder goes off!
-    ph int 
+    ph int
+    
+As it happens, you can use the reminder functionality as a general reminding
+tool, for example like this:
+
+    ph rem 20 Drink some more water!
+
+where it will include your message in the reminder.
 
 
 ## Developer notes
@@ -99,6 +141,21 @@ and then follow the instructions on the screen.
 
 ### Todo
 
+Roughly in order of priority:
+
+* Timeout on status call. Currently, after the client issues a status request,
+
+    it waits for an UDP reply. If no session is active, no such reply will be
+    sent and thus it will wait for ever. A simple timeout would solve that.
+
+* Warn when starting a new session when one is already started. Perhaps by
+    sending a UDP message and waiting for a response when starting?
+
+* Convenience wrapping command around hledger (or the hledger API?) to get
+    the time balance for the last week or something?
+
+* Tests
+
 * Multiple simultaneous sessions. Useful if you want to double-bill clients,
     e.g. you're working on a feature that both need and should pay for. Easiest
     to explain with the following sequence of commands:
@@ -113,5 +170,7 @@ and then follow the instructions on the screen.
 
     This should be pretty easy to make since UDP allows several processes to
     listen to a single port.
+    
+    It does however require an upgrade to the protocol. You're likely to also
+    want to get the status of either all sessions or a specific one.
 
-* Tests
