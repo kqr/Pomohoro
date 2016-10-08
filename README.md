@@ -140,6 +140,22 @@ and then follow the instructions on the screen.
 
 ### Todo
 
+Roughly in order of priority:
+
+* Default to a timeclock file in the home directory of the user, not in /tmp!
+
+* Timeout on status call. Currently, after the client issues a status request,
+    it waits for an UDP reply. If no session is active, no such reply will be
+    sent and thus it will wait for ever. A simple timeout would solve that.
+
+* Warn when starting a new session when one is already started. Perhaps by
+    sending a UDP message and waiting for a response when starting?
+
+* Convenience wrapping command around hledger (or the hledger API?) to get
+    the time balance for the last week or something?
+
+* Tests
+
 * Multiple simultaneous sessions. Useful if you want to double-bill clients,
     e.g. you're working on a feature that both need and should pay for. Easiest
     to explain with the following sequence of commands:
@@ -158,16 +174,3 @@ and then follow the instructions on the screen.
     It does however require an upgrade to the protocol. You're likely to also
     want to get the status of either all sessions or a specific one.
 
-* Tests
-
-* Timeout on status call. Currently, after the client issues a status request,
-    it waits for an UDP reply. If no session is active, no such reply will be
-    sent and thus it will wait for ever. A simple timeout would solve that.
- 
-* Warn when starting a new session when one is already started. Perhaps by
-    sending a UDP message and waiting for a response when starting?
-
-* Default to a timeclock file in the home directory of the user, not in /tmp!
-
-* Convenience wrapping command around hledger (or the hledger API?) to get
-    the time balance for the last week or something?
