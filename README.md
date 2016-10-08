@@ -144,6 +144,13 @@ tool, for example like this:
 where it will include your message in the reminder.
 
 
+## Further reading
+
+I will collect some links here. About hledger, timeclock and the pomodoro technique.
+
+* [Blog post about Pomohoro](https://two-wrongs.com/pomohoro-combine-pomodoro-technique-hledger-timeclock-productivity)
+
+
 ## Developer notes
 
 ### Building
