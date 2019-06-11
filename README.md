@@ -35,7 +35,7 @@ To install, the following four commands are likely sufficient:
 The third command may exit with an error and prompt you to run `stack setup`. If
 it does, follow those instructions. It is simply saying that it can't find the
 correct version of the compiler on your system, so it will download one an
-instal it in a sandbox so it does not affect the rest of your system.
+install it in a sandbox so it does not affect the rest of your system.
 
 
 ## Basic usage
@@ -121,7 +121,7 @@ You can also check how far into your current session you are, by issuing the
 command
 
     ph status
-    
+
 which will respond with something along the lines of
 
     Current work session: 19/25 minute(s)
@@ -135,7 +135,7 @@ then manually interrupt the regular session once the timer goes off. Like so:
     # ...
     # reminder goes off!
     ph int
-    
+
 As it happens, you can use the reminder functionality as a general reminding
 tool, for example like this:
 
@@ -185,7 +185,7 @@ Roughly in order of priority:
 
     This should be pretty easy to make since UDP allows several processes to
     listen to a single port.
-    
+
     It does however require an upgrade to the protocol. You're likely to also
     want to get the status of either all sessions or a specific one.
 
