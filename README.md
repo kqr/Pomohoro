@@ -37,6 +37,22 @@ it does, follow those instructions. It is simply saying that it can't find the
 correct version of the compiler on your system, so it will download one an
 install it in a sandbox so it does not affect the rest of your system.
 
+Further, the dependencies might require you to install missing development
+files. E.g., `stack` might complain like so:
+
+        Configuring libxml-sax-0.7.5...
+        Cabal-simple_mPHDZzAJ_1.24.0.0_ghc-8.0.1: The pkg-config package 'libxml-2.0'
+        is required but it could not be found.
+
+which would require you to
+
+        $ sudo apt-get install libxml2-dev
+
+which installs libxml2's dev files and add the pkgconfig directory to 
+`PKG_CONFIG_PATH` if it not pointing to the pkgconfig, yet:
+
+        $ export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+
 
 ## Basic usage
 
